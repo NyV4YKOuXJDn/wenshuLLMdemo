@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, ReactNode } from 'react';
 import { Activity, BookOpen, FileText, PieChart, Heart, Clipboard, 
          Sparkles, Pill, AlertCircle, LineChart, ArrowLeft } from 'lucide-react';
 
-const Card = ({ children, className = '', ...props }) => (
+interface CardProps {
+  children: ReactNode;
+  className?: string;
+  [key: string]: any;
+}
+
+const Card: React.FC<CardProps> = ({ children, className = '', ...props }) => (
   <div className={`bg-white rounded-lg ${className}`} {...props}>
     {children}
   </div>
