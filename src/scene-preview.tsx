@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Activity, BookOpen, FileText, PieChart, Heart, Clipboard, 
          Sparkles, Pill, AlertCircle, LineChart, ArrowLeft } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // 添加这些接口定义
 interface CardProps {
@@ -70,7 +71,7 @@ export default function SceneExamples() {
       title: "生成当日护理要点", 
       description: "AI总结关键护理事项",
       gradient: "from-red-500 to-rose-500",
-      content: "2024年1月20日护理记录：\n\n晨间查房：\n- 患者李某，睡眠可\n- 体温 36.5℃，血压 125/75 mmHg\n- 皮肤完整，末梢循环好\n\n治疗执行：\n- 08:00 常规护理\n- 10:00 配合检查\n- 14:00 伤口换药\n\n观察重点：\n- 疼痛评分变化\n- 血糖监测结果\n- 饮食情况",
+      content: "2024年1月20日护理记录：\n\n晨间查房：\n- 患者李某，睡眠可\n- 体�� 36.5℃，血压 125/75 mmHg\n- 皮肤完整，末梢循环好\n\n治疗执行：\n- 08:00 常规护理\n- 10:00 配合检查\n- 14:00 伤口换药\n\n观察重点：\n- 疼痛评分变化\n- 血糖监测结果\n- 饮食情况",
       aiOutput: "当日护理要点总结：\n\n1. 重点观察项目：\n- 密切监测生命体征\n- 关注疼痛变化趋势\n- 加强血糖管理\n\n2. 存在的问题：\n- 早间血糖偏高\n- 活动量不足\n\n3. 后续护理建议：\n- 调整胰岛素用量\n- 指导适量活动\n- 加强健康宣教\n\n4. 交接重点：\n重点关注夜间血糖变化"
     }
   ];
@@ -79,7 +80,13 @@ export default function SceneExamples() {
     const [showAiOutput, setShowAiOutput] = useState(false);
   
     return (
-      <div className="h-screen bg-gray-100 flex flex-col">
+      <motion.div 
+        className="h-screen bg-gray-100 flex flex-col"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -20 }}
+        transition={{ duration: 0.3 }}
+      >
         <div className="bg-white border-b border-gray-200 py-4 px-6">
           <div className="max-w-2xl mx-auto flex items-center">
             <button 
@@ -141,7 +148,7 @@ export default function SceneExamples() {
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   };
 
@@ -151,43 +158,71 @@ export default function SceneExamples() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
-            "护理文书+AI"场景示例
-          </h1>
-        </div>
-        
-        <div className="space-y-4">
-          {scenes.map((scene, index) => (
-            <Card 
-              key={index}
-              className="group hover:shadow-lg border border-gray-200 cursor-pointer"
-              onClick={() => setSelectedScene(scene)}
-            >
-              <div className="p-4 flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className={`p-2 rounded-lg bg-gradient-to-r ${scene.gradient} text-white`}>
-                    {scene.icon}
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-gray-800 text-lg">
-                      {scene.title}
-                    </h3>
-                    <p className="text-gray-500 text-sm">
-                      {scene.description}
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-blue-50">
-                  <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
-      </div>
+      <AnimatePresence mode="wait">
+        {selectedScene ? (
+          <SceneDetail 
+            key="detail"
+            scene={selectedScene} 
+            onBack={() => setSelectedScene(null)} 
+          />
+        ) : (
+          <motion.div 
+            key="list"
+            className="max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="text-center mb-8">
+              <motion.h1 
+                className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text"
+                initial={{ scale: 0.9 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                "护理文书+AI"场景示例
+              </motion.h1>
+            </div>
+            
+            <div className="space-y-4">
+              {scenes.map((scene, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card 
+                    className="group hover:shadow-lg border border-gray-200 cursor-pointer"
+                    onClick={() => setSelectedScene(scene)}
+                  >
+                    <div className="p-4 flex items-center justify-between">
+                      <div className="flex items-center space-x-4">
+                        <div className={`p-2 rounded-lg bg-gradient-to-r ${scene.gradient} text-white`}>
+                          {scene.icon}
+                        </div>
+                        <div>
+                          <h3 className="font-medium text-gray-800 text-lg">
+                            {scene.title}
+                          </h3>
+                          <p className="text-gray-500 text-sm">
+                            {scene.description}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-blue-50">
+                        <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                      </div>
+                    </div>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
