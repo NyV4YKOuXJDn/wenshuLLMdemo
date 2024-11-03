@@ -1,10 +1,11 @@
 import React from 'react';
-// ... 其他导入
 
-const ScenePreview = () => {
-  // 您的场景预览组件代码
+const ScenePreview: React.FC = () => {
   return (
-    // ... 组件内容
+    <div className="scene-preview">
+      <h1>场景预览</h1>
+      {/* 你的场景预览组件内容 */}
+    </div>
   );
 };
 
