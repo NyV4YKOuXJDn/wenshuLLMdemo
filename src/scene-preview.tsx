@@ -1,25 +1,21 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState } from 'react';
 import { Activity, BookOpen, FileText, PieChart, Heart, Clipboard, 
          Sparkles, Pill, AlertCircle, LineChart, ArrowLeft } from 'lucide-react';
 
+// 添加这些接口定义
 interface CardProps {
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
   [key: string]: any;
 }
 
-const Card: React.FC<CardProps> = ({ children, className = '', ...props }) => (
-  <div className={`bg-white rounded-lg ${className}`} {...props}>
-    {children}
-  </div>
-);
-
 interface Scene {
-  id?: number;
+  icon: JSX.Element;
   title: string;
   description: string;
-  imageUrl: string;
-  // 添加其他场景相关的属性
+  gradient: string;
+  content: string;
+  aiOutput: string;
 }
 
 interface SceneDetailProps {
@@ -27,78 +23,14 @@ interface SceneDetailProps {
   onBack: () => void;
 }
 
-const SceneDetail: React.FC<SceneDetailProps> = ({ scene, onBack }) => {
-  const [showAiOutput, setShowAiOutput] = useState(false);
-  
-  return (
-    <div className="h-screen bg-gray-100 flex flex-col">
-      <div className="bg-white border-b border-gray-200 py-4 px-6">
-        <div className="max-w-2xl mx-auto flex items-center">
-          <button 
-            onClick={onBack}
-            className="p-2 hover:bg-gray-100 rounded-full mr-4"
-          >
-            <ArrowLeft className="w-5 h-5 text-gray-600" />
-          </button>
-          <div>
-            <h1 className="text-xl font-semibold text-gray-800">{scene.title}</h1>
-            <p className="text-sm text-gray-500">{scene.description}</p>
-          </div>
-        </div>
-      </div>
-  
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-2xl mx-auto p-6 space-y-6">
-          <Card className="border border-gray-200">
-            <div className="p-6">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className={`p-2 rounded-lg bg-gradient-to-r ${scene.gradient} text-white`}>
-                  {scene.icon}
-                </div>
-                <h2 className="text-lg font-medium text-gray-800">场景内容</h2>
-              </div>
-              <div className="h-64 overflow-y-auto bg-gray-50 rounded-lg p-4 border border-gray-200">
-                <pre className="whitespace-pre-wrap text-base text-gray-700 leading-relaxed">
-                  {scene.content}
-                </pre>
-              </div>
-            </div>
-          </Card>
-  
-          <button 
-            className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg font-medium 
-                     hover:opacity-90 flex items-center justify-center space-x-2"
-            onClick={() => setShowAiOutput(true)}
-          >
-            <Sparkles className="w-5 h-5" />
-            <span>点击查看AI输出</span>
-          </button>
-  
-          {showAiOutput && (
-            <Card className="border border-gray-200">
-              <div className="p-6">
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="p-2 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 text-white">
-                    <Activity className="w-5 h-5" />
-                  </div>
-                  <h2 className="text-lg font-medium text-gray-800">AI输出</h2>
-                </div>
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                  <pre className="whitespace-pre-wrap text-base text-gray-700 leading-relaxed">
-                    {scene.aiOutput}
-                  </pre>
-                </div>
-              </div>
-            </Card>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
+const Card = ({ children, className = '', ...props }: CardProps) => (
+  <div className={`bg-white rounded-lg ${className}`} {...props}>
+    {children}
+  </div>
+);
 
 export default function SceneExamples() {
-  const [selectedScene, setSelectedScene] = useState(null);
+  const [selectedScene, setSelectedScene] = useState<Scene | null>(null);
 
   const scenes = [
     { 
@@ -142,6 +74,76 @@ export default function SceneExamples() {
       aiOutput: "当日护理要点总结：\n\n1. 重点观察项目：\n- 密切监测生命体征\n- 关注疼痛变化趋势\n- 加强血糖管理\n\n2. 存在的问题：\n- 早间血糖偏高\n- 活动量不足\n\n3. 后续护理建议：\n- 调整胰岛素用量\n- 指导适量活动\n- 加强健康宣教\n\n4. 交接重点：\n重点关注夜间血糖变化"
     }
   ];
+
+  const SceneDetail = ({ scene, onBack }: SceneDetailProps) => {
+    const [showAiOutput, setShowAiOutput] = useState(false);
+  
+    return (
+      <div className="h-screen bg-gray-100 flex flex-col">
+        <div className="bg-white border-b border-gray-200 py-4 px-6">
+          <div className="max-w-2xl mx-auto flex items-center">
+            <button 
+              onClick={onBack}
+              className="p-2 hover:bg-gray-100 rounded-full mr-4"
+            >
+              <ArrowLeft className="w-5 h-5 text-gray-600" />
+            </button>
+            <div>
+              <h1 className="text-xl font-semibold text-gray-800">{scene.title}</h1>
+              <p className="text-sm text-gray-500">{scene.description}</p>
+            </div>
+          </div>
+        </div>
+  
+        <div className="flex-1 overflow-y-auto">
+          <div className="max-w-2xl mx-auto p-6 space-y-6">
+            <Card className="border border-gray-200">
+              <div className="p-6">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className={`p-2 rounded-lg bg-gradient-to-r ${scene.gradient} text-white`}>
+                    {scene.icon}
+                  </div>
+                  <h2 className="text-lg font-medium text-gray-800">场景内容</h2>
+                </div>
+                <div className="h-64 overflow-y-auto bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <pre className="whitespace-pre-wrap text-base text-gray-700 leading-relaxed">
+                    {scene.content}
+                  </pre>
+                </div>
+              </div>
+            </Card>
+  
+            <button 
+              className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg font-medium 
+                       hover:opacity-90 flex items-center justify-center space-x-2"
+              onClick={() => setShowAiOutput(true)}
+            >
+              <Sparkles className="w-5 h-5" />
+              <span>点击查看AI输出</span>
+            </button>
+  
+            {showAiOutput && (
+              <Card className="border border-gray-200">
+                <div className="p-6">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <div className="p-2 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+                      <Activity className="w-5 h-5" />
+                    </div>
+                    <h2 className="text-lg font-medium text-gray-800">AI输出</h2>
+                  </div>
+                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <pre className="whitespace-pre-wrap text-base text-gray-700 leading-relaxed">
+                      {scene.aiOutput}
+                    </pre>
+                  </div>
+                </div>
+              </Card>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   if (selectedScene) {
     return <SceneDetail scene={selectedScene} onBack={() => setSelectedScene(null)} />;
