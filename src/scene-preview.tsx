@@ -159,7 +159,7 @@ export default function SceneExamples() {
     },
     {
       icon: <Heart />,
-      title: "生成当日护理要点",
+      title: "当日护理要点",
       description: "AI总结关键护理事项",
       gradient: "from-red-400 to-red-500",
       content: `患者张强，男性，45岁，术后恢复期。当天记录汇总：

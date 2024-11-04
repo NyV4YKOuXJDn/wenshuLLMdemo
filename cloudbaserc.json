@@ -10,9 +10,9 @@
       "client": {
         "use": "@cloudbase/framework-plugin-website",
         "inputs": {
-          "buildCommand": "npm run build",
+          "buildCommand": "VITE_APP_ENV=production npm run build",
           "outputPath": "dist",
-          "installCommand": "npm install --force",
+          "installCommand": "npm install --legacy-peer-deps",
           "ignore": [
             ".git",
             ".github",
