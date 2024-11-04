@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Activity, BookOpen, FileText, PieChart, Heart, 
   Sparkles, ArrowLeft, ChevronRight,
@@ -423,6 +423,10 @@ export default function SceneExamples() {
 `
     }
   ];
+
+  useEffect(() => {
+    console.log('当前场景列表:', scenes.map(s => s.title));
+  }, []);
 
   // 恢复完整的 SceneDetail 组件
   const SceneDetail = ({ scene, onBack }: SceneDetailProps) => {
