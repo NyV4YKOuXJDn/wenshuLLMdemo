@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { Activity, BookOpen, FileText, PieChart, Heart, Clipboard, 
-         Sparkles, Pill, AlertCircle, LineChart, ArrowLeft } from 'lucide-react';
+import { 
+  Activity, BookOpen, FileText, PieChart, Heart, 
+  Sparkles, ArrowLeft, ChevronRight 
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import ReactMarkdown from 'react-markdown';
 
+// 恢复 Card 组件
 const Card = ({ children, className = '', ...props }) => (
   <div className={`bg-white rounded-lg ${className}`} {...props}>
     {children}
@@ -12,48 +17,183 @@ export default function SceneExamples() {
   const [selectedScene, setSelectedScene] = useState(null);
 
   const scenes = [
-    { 
-      icon: <Activity />, 
-      title: "错别字检测", 
-      description: "AI智能识别文档错误用字",
-      gradient: "from-blue-500 to-cyan-500",
-      content: "这是一段示例文本，用来演示错别字检测功能。这里可能包含一些错别字，比如：\n\n1. 医生开了新的处方\n2. 患者体温正常\n3. 需要定期复查\n\n以上内容仅作演示使用。实际使用时，这里会显示真实的医疗文书内容。",
-      aiOutput: "AI分析结果：\n\n✓ 文档总体书写规范\n✓ 未发现明显错别字\n✓ 专业术语使用准确\n\n建议：可以适当增加标点符号，提高文档可读性。"
+    {
+      icon: <Activity />,
+      title: "错别字检测",
+      description: "AI智能识别文档错别字",
+      gradient: "from-blue-400 to-blue-500",
+      content: `患者姓名：张三
+病房号：A201
+日期：2023年10月1日
+时间：08:00
+
+护理记录：
+患者今早诉头痛加剧，精神状态欠佳。测量体温36.8℃，脉搏80次/分，呼吸20次/分，血压120/80mmHg。已遵医嘱给予止痛药物。患者饮食尚可，但胃口不佳。
+
+签名：护士李四`,
+      aiOutput: `护理记录（修改建议）：
+患者今早诉头痛加剧，精神状态欠佳。测量体**温**36.8℃，脉搏80次/分，呼吸20次/分，血压120/80mmHg。已遵医嘱给予止痛药物。患者饮食尚可，但胃口不佳。
+
+标注：
+- "体文"应为"体温"。
+`
     },
-    { 
-      icon: <FileText />, 
-      title: "生成SBAR交班报告", 
+    {
+      icon: <FileText />,
+      title: "生成SBAR交班报告",
       description: "智能生成规范交接班文档",
-      gradient: "from-purple-500 to-pink-500",
-      content: "护士交接班记录示例：\n\n患者王某，男，52岁，因胸痛入院。\n目前生命体征平稳，血压 120/80 mmHg。\n医嘱执行情况：已按时服用降压药。\n特殊情况：无。",
-      aiOutput: "SBAR格式报告：\n\nS：患者王某，男性，52岁，因胸痛入院\nB：患者目前生命体征平稳\nA：已完成所有医嘱执行\nR：建议继续观察生命体征"
+      gradient: "from-purple-400 to-purple-500",
+      content: `基本信息：
+
+患者姓名：李华
+性别：男
+年龄：65岁
+诊断：肺炎
+入院评估单：
+
+入院日期：2023年10月1日
+主要症状：咳嗽、发热、呼吸困难
+护理记录单（过去24小时）：
+
+10月2日 08:00：体温38.5℃，脉搏90次/分，呼吸22次/分，血压130/85mmHg。给予退热药物。
+10月2日 14:00：体温37.8℃，症状有所缓解。患者进食正常。
+10月2日 20:00：体温38.0℃，咳嗽加重，痰液增多。`,
+      aiOutput: `**S（情况）**：
+李华，男，65岁，因肺炎于2023年10月1日入院。目前主要症状为发热、咳嗽、呼吸困难。
+
+**B（背景）**：
+患者入院时体温38.5℃，脉搏90次/分，呼吸22次/分。已按照医嘱给予抗生素治疗和退热处理。
+
+**A（评估）**：
+过去24小时内，患者体温有所波动，最低37.8℃，最高38.5℃。下午症状有所缓解，但晚间咳嗽加重，痰液增多。生命体征基本平稳，但需密切监测。
+
+**R（建议）**：
+建议继续观察体温变化，关注咳嗽和痰液情况。如体温持续升高或症状加重，需及时通知医生调整治疗方案。
+
+签名：护士王五
+日期：2023年10月2日
+`
     },
-    { 
-      icon: <PieChart />, 
-      title: "病情变化摘要", 
+    {
+      icon: <PieChart />,
+      title: "病情变化摘要",
       description: "AI分析患者病情发展轨迹",
-      gradient: "from-green-500 to-emerald-500",
-      content: "患者病情记录：\n\n入院时间：2024-01-15\n主诉：反复胸闷、气促2月，加重3天\n\n病情发展：\n1月15日：急性发作，呼吸困难\n1月16日：给予吸氧治疗后好转\n1月17日：复查心电图示ST段改变\n1月18日：心功能较前改善\n\n目前状态：\n- 呼吸平稳，SPO2 98%\n- 未再出现胸闷症状\n- 日常活动耐受良好",
-      aiOutput: "病情变化分析：\n\n1. 总体趋势：持续改善\n\n2. 关键节点：\n- 入院：症状急性发作\n- 治疗后：氧合明显改善\n- 现状：基本稳定\n\n3. 注意事项：\n- 继续监测心电图变化\n- 关注活动耐受程度\n- 预防再次急性发作"
+      gradient: "from-green-400 to-green-500",
+      content: `患者王芳，女性，50岁，因高血压入院。过去一周的记录摘要：
+
+10月1日：
+
+血压：150/95mmHg，头痛。
+给予降压药物。
+10月2日：
+
+血压：145/90mmHg，头痛减轻。
+10月3日：
+
+血压：140/85mmHg，症状明显好转。
+10月4日：
+
+血压：138/80mmHg，患者自觉良好。
+10月5日：
+
+血压：135/78mmHg，开始进行适当的运动。
+10月6日：
+
+血压：130/80mmHg，继续观察。
+10月7日：
+
+血压：132/82mmHg，准备出院。
+`,
+      aiOutput: `**病情变化摘要（10月1日-10月7日）**
+
+患者王芳因高血压于10月1日入院，入院时血压为150/95mmHg，伴有头痛症状。经降压药物治疗后，患者血压逐步下降：
+
+- **10月2日**：血压降至145/90mmHg，头痛减轻。
+- **10月3日**：血压进一步降至140/85mmHg，症状明显好转。
+- **10月4日-10月5日**：血压稳定在135/78mmHg左右，患者自觉良好，开始适当运动。
+- **10月6日-10月7日**：血压保持在130/80mmHg左右，病情稳定，计划出院。
+
+总体来看，患者在过去一周内血压控制良好，症状明显改善，治疗效果显著。
+
+签名：护士赵六
+日期：2023年10月7日
+`
     },
-    { 
-      icon: <BookOpen />, 
-      title: "健康教育内容优化", 
-      description: "智能优化患者教育方案",
-      gradient: "from-orange-500 to-yellow-500",
-      content: "冠心病患者出院健康教育：\n\n1. 日常注意事项：\n- 规律作息，避免熬夜\n- 适量运动，循序渐进\n- 清淡饮食，控制油盐\n\n2. 用药指导：\n- 坚持服用医嘱用药\n- 定期测量血压\n\n3. 复诊安排：\n- 每月门诊随访\n- 每周测量体重\n\n4. 紧急情况：\n如出现胸痛等症状及时就医",
-      aiOutput: "教育方案优化建议：\n\n1. 内容完善度：90%\n\n2. 改进建议：\n- 添加具体运动方案\n- 补充饮食推荐食谱\n- 增加血压记录表\n\n3. 表达优化：\n- 使用更通俗的语言\n- 添加图文说明\n- 制作便携卡片\n\n4. 个性化建议：\n针对患者年龄和生活习惯，建议采用视频教学"
+    {
+      icon: <BookOpen />,
+      title: "健康教育内容优化",
+      description: "智能优化患者教育��案",
+      gradient: "from-orange-400 to-orange-500",
+      content: `患者需要注意低盐饮食，限制钠离子摄入，以控制高血压。遵医嘱服用抗高血压药物，避免并发症的发生。
+
+签名：护士孙七
+`,
+      aiOutput: `健康教育内容（优化版）：
+
+**饮食建议**：
+- 请尽量减少食盐的使用，因为盐中含有的钠会使血压升高。
+- 选择新鲜的食物，避免腌制、罐头和加工食品。
+
+**用药指导**：
+- 按照医生的指示按时服用降压药物，不要自行停药或更改剂量。
+
+**预防措施**：
+- 定期测量血压，记录数值，及时反馈给医生。
+- 适当进行轻松的运动，如散步，有助于控制血压。
+
+签名：护士孙七
+日期：2023年10月2日
+`
     },
-    { 
-      icon: <Heart />, 
-      title: "生成当日护理要点", 
+    {
+      icon: <Heart />,
+      title: "生成当日护理要点",
       description: "AI总结关键护理事项",
-      gradient: "from-red-500 to-rose-500",
-      content: "2024年1月20日护理记录：\n\n晨间查房：\n- 患者李某，睡眠可\n- 体温 36.5℃，血压 125/75 mmHg\n- 皮肤完整，末梢循环好\n\n治疗执行：\n- 08:00 常规护理\n- 10:00 配合检查\n- 14:00 伤口换药\n\n观察重点：\n- 疼痛评分变化\n- 血糖监测结果\n- 饮食情况",
-      aiOutput: "当日护理要点总结：\n\n1. 重点观察项目：\n- 密切监测生命体征\n- 关注疼痛变化趋势\n- 加强血糖管理\n\n2. 存在的问题：\n- 早间血糖偏高\n- 活动量不足\n\n3. 后续护理建议：\n- 调整胰岛素用量\n- 指导适量活动\n- 加强健康宣教\n\n4. 交接重点：\n重点关注夜间血糖变化"
+      gradient: "from-red-400 to-red-500",
+      content: `患者张强，男性，45岁，术后恢复期。当天记录汇总：
+
+生命体征记录：
+
+08:00：体温37.0℃，脉搏78次/分，血压125/80mmHg。
+12:00：体温37.2℃，脉搏80次/分，血压128/82mmHg。
+16:00：体温37.1℃，脉搏79次/分，血压126/81mmHg。
+护理记录单：
+
+09:00：患者诉有轻微伤口疼痛，已给予镇痛药物。
+14:00：协助患者下床活动，活动耐受良好。
+18:00：观察伤口无渗出，换药后伤口清洁干燥。
+医嘱执行单：
+
+按时给予抗生素、镇痛药物。
+按医嘱进行输液。`,
+      aiOutput: `**当日护理要点（10月2日）**
+
+1. **生命体征**：
+   - 体温稳定在37.0-37.2℃，无发热迹象。
+   - 脉搏和血压正常。
+
+2. **疼痛管理**：
+   - 上午9点患者有轻微伤口疼痛，已按医嘱给予镇痛药物，效果良好。
+
+3. **活动情况**：
+   - 下午2点协助患者下床活动，耐受情况良好，无头晕或乏力。
+
+4. **伤口护理**：
+   - 傍晚6点更换伤口敷料，伤口无渗出，未见红肿感染迹象。
+
+5. **用药和治疗**：
+   - 按时执行所有医嘱，给予抗生素和镇痛药物，输液过程顺利，无不良反应。
+
+6. **注意事项**：
+   - 继续观察伤口情况，防止感染。
+   - 鼓励患者适当活动，促进恢复。
+
+签名：护士周八
+`
     }
   ];
 
+  // 恢复完整的 SceneDetail 组件
   const SceneDetail = ({ scene, onBack }) => {
     const [showAiOutput, setShowAiOutput] = useState(false);
   
@@ -85,9 +225,9 @@ export default function SceneExamples() {
                   <h2 className="text-lg font-medium text-gray-800">场景内容</h2>
                 </div>
                 <div className="h-64 overflow-y-auto bg-gray-50 rounded-lg p-4 border border-gray-200">
-                  <pre className="whitespace-pre-wrap text-base text-gray-700 leading-relaxed">
+                  <ReactMarkdown className="prose prose-sm max-w-none">
                     {scene.content}
-                  </pre>
+                  </ReactMarkdown>
                 </div>
               </div>
             </Card>
@@ -111,9 +251,9 @@ export default function SceneExamples() {
                     <h2 className="text-lg font-medium text-gray-800">AI输出</h2>
                   </div>
                   <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                    <pre className="whitespace-pre-wrap text-base text-gray-700 leading-relaxed">
+                    <ReactMarkdown className="prose prose-sm max-w-none">
                       {scene.aiOutput}
-                    </pre>
+                    </ReactMarkdown>
                   </div>
                 </div>
               </Card>
@@ -125,7 +265,16 @@ export default function SceneExamples() {
   };
 
   if (selectedScene) {
-    return <SceneDetail scene={selectedScene} onBack={() => setSelectedScene(null)} />;
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.2 }}
+      >
+        <SceneDetail scene={selectedScene} onBack={() => setSelectedScene(null)} />
+      </motion.div>
+    );
   }
 
   return (
@@ -139,31 +288,44 @@ export default function SceneExamples() {
         
         <div className="space-y-4">
           {scenes.map((scene, index) => (
-            <Card 
+            <motion.div 
               key={index}
-              className="group hover:shadow-lg border border-gray-200 cursor-pointer"
-              onClick={() => setSelectedScene(scene)}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.3,
+                delay: index * 0.1 
+              }}
+              whileHover={{ 
+                scale: 1.02,
+                transition: { duration: 0.2 }
+              }}
+              whileTap={{ scale: 0.98 }}
             >
-              <div className="p-4 flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className={`p-2 rounded-lg bg-gradient-to-r ${scene.gradient} text-white`}>
-                    {scene.icon}
+              <Card 
+                className="group hover:shadow-lg border border-gray-200 cursor-pointer"
+                onClick={() => setSelectedScene(scene)}
+              >
+                <div className="p-4 flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className={`p-2 rounded-lg bg-gradient-to-r ${scene.gradient} text-white`}>
+                      {scene.icon}
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-800 text-lg">
+                        {scene.title}
+                      </h3>
+                      <p className="text-gray-500 text-sm">
+                        {scene.description}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-medium text-gray-800 text-lg">
-                      {scene.title}
-                    </h3>
-                    <p className="text-gray-500 text-sm">
-                      {scene.description}
-                    </p>
+                  <div className="text-blue-600">
+                    <ChevronRight className="w-5 h-5" />
                   </div>
                 </div>
-                
-                <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-blue-50">
-                  <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                </div>
-              </div>
-            </Card>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>
