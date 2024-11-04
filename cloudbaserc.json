@@ -12,7 +12,13 @@
         "inputs": {
           "buildCommand": "npm run build",
           "outputPath": "dist",
-          "installCommand": "npm install",
+          "installCommand": "npm install --force",
+          "ignore": [
+            ".git",
+            ".github",
+            "node_modules",
+            "cloudbaserc.json"
+          ],
           "httpPath": "/"
         }
       }
