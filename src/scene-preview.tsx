@@ -26,6 +26,11 @@ interface Scene {
   aiOutput: string;
 }
 
+interface SceneDetailProps {
+  scene: Scene;
+  onBack: () => void;
+}
+
 export default function SceneExamples() {
   const [selectedScene, setSelectedScene] = useState<Scene | null>(null);
 
@@ -72,7 +77,7 @@ export default function SceneExamples() {
 10月2日 14:00：体温37.8℃，症状有所缓解。患者进食正常。
 10月2日 20:00：体温38.0℃，咳嗽加重，痰液增多。`,
       aiOutput: `**S（情况）**：
-李华，男，65岁，因肺炎于2023年10月1日入院。目前主要症状为发热、咳嗽、呼吸困难。
+李华，男，65岁，因���炎于2023年10月1日入院。目前主要症状为发热、咳嗽、呼吸困难。
 
 **B（背景）**：
 患者入院时体温38.5℃，脉搏90次/分，呼吸22次/分。已按照医嘱给予抗生素治疗和退热处理。
@@ -115,7 +120,7 @@ export default function SceneExamples() {
 血压：130/80mmHg，继续观察。
 10月7日：
 
-血压：132/82mmHg，准备出院。
+血压��132/82mmHg，准备出院。
 `,
       aiOutput: `**病情变化摘要（10月1日-10月7日）**
 
@@ -134,7 +139,7 @@ export default function SceneExamples() {
     },
     {
       icon: <BookOpen />,
-      title: "健康教育内容优化",
+      title: "健康教育容优化",
       description: "智能优化患者教育案",
       gradient: "from-orange-400 to-orange-500",
       content: `患者需要注意低盐饮食，限制钠离子摄入，以控制高血压。遵医嘱服用抗高血压药物，避免并发症的发生。
@@ -207,7 +212,7 @@ export default function SceneExamples() {
   ];
 
   // 恢复完整的 SceneDetail 组件
-  const SceneDetail = ({ scene, onBack }) => {
+  const SceneDetail = ({ scene, onBack }: SceneDetailProps) => {
     const [showAiOutput, setShowAiOutput] = useState(false);
   
     return (
