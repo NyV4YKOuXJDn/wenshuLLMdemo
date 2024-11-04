@@ -6,15 +6,28 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 
-// 恢复 Card 组件
-const Card = ({ children, className = '', ...props }) => (
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+  className?: string;
+}
+
+const Card: React.FC<CardProps> = ({ children, className = '', ...props }) => (
   <div className={`bg-white rounded-lg ${className}`} {...props}>
     {children}
   </div>
 );
 
+interface Scene {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  gradient: string;
+  content: string;
+  aiOutput: string;
+}
+
 export default function SceneExamples() {
-  const [selectedScene, setSelectedScene] = useState(null);
+  const [selectedScene, setSelectedScene] = useState<Scene | null>(null);
 
   const scenes = [
     {
@@ -122,7 +135,7 @@ export default function SceneExamples() {
     {
       icon: <BookOpen />,
       title: "健康教育内容优化",
-      description: "智能优化患者教育��案",
+      description: "智能优化患者教育案",
       gradient: "from-orange-400 to-orange-500",
       content: `患者需要注意低盐饮食，限制钠离子摄入，以控制高血压。遵医嘱服用抗高血压药物，避免并发症的发生。
 
