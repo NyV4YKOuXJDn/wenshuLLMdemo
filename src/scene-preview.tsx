@@ -232,7 +232,7 @@ export default function SceneExamples() {
    - **提示**：请核实患者的实际年龄，并确保各表单信息一致。
 
 2. **过敏史：**
-   - 入院评估单：无
+   - 入院评���单：无
    - 护理记录单：青霉素
    - **提示**：过敏史信息存在冲突，请立即核实患者是否对青霉素过敏，以确保用药安全。
 
@@ -510,7 +510,7 @@ export default function SceneExamples() {
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
-            "护理文书+AI"场景示例
+            "护理文书+AI"场景示例 v1.1
           </h1>
         </div>
         
