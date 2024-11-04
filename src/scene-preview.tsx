@@ -214,7 +214,7 @@ export default function SceneExamples() {
       icon: <Stethoscope />,
       title: "信息一致性检查",
       description: "xxx",
-      gradient: "from-blue-400 to-red-500",
+      gradient: "from-blue-400 to-blue-500",
       content: `入院评估单：
 患者姓名：张伟
 性别：男
@@ -257,7 +257,7 @@ export default function SceneExamples() {
       icon: <Clipboard />,
       title: "关键评估结果摘要",
       description: "xxx",
-      gradient: "from-purple-400 to-red-500",
+      gradient: "from-purple-400 to-purple-500",
       content: `GCS评估记录单：
 日期：2023年10月2日
 睁眼反应（E）：3分
@@ -303,7 +303,7 @@ export default function SceneExamples() {
       icon: <Pills />,
       title: "用药记录摘要",
       description: "xxx",
-      gradient: "from-green-400 to-red-500",
+      gradient: "from-green-400 to-green-500",
       content: `医嘱长期医嘱：
 - 药物A：500mg，口服，每8小时一次
 - 药物B：10mg，静脉注射，每日一次
@@ -346,7 +346,7 @@ export default function SceneExamples() {
       icon: <BedDouble />,
       title: "冲突医嘱检测",
       description: "xxx",
-      gradient: "from-orange-400 to-red-500",
+      gradient: "from-orange-400 to-orange-500",
       content: `新医嘱：
 药物C：阿莫西林胶囊，500mg，口服，每8小时一次
 
