@@ -16,7 +16,9 @@
     "start": "vite",
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prebuild": "rm -rf dist",
+    "postbuild": "ls -la dist"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.15",
