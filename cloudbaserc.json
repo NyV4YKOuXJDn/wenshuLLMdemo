@@ -10,17 +10,9 @@
       "client": {
         "use": "@cloudbase/framework-plugin-website",
         "inputs": {
-          "buildCommand": "npm run build",
           "outputPath": "dist",
-          "installCommand": "npm install --legacy-peer-deps",
-          "ignore": [
-            ".git",
-            ".github",
-            "node_modules",
-            "cloudbaserc.json"
-          ],
           "cloudPath": "/",
-          "envVariables": {},
+          "buildCommand": "npm run build",
           "staticMode": true
         }
       }
