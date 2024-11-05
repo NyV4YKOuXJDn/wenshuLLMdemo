@@ -466,7 +466,7 @@ export default function SceneExamples() {
               onClick={() => setShowAiOutput(true)}
             >
               <Sparkles className="w-5 h-5" />
-              <span>点击查看AI输出</span>
+              <span>点击查看AI输出示例</span>
             </button>
   
             {showAiOutput && (
@@ -510,7 +510,7 @@ export default function SceneExamples() {
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
-            "护理文书+AI"场景示例 v1.1
+            "护理文书+AI"场景示例 v1105
           </h1>
         </div>
         
