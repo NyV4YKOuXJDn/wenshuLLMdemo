@@ -19,7 +19,9 @@
             "node_modules",
             "cloudbaserc.json"
           ],
-          "httpPath": "/"
+          "cloudPath": "/",
+          "envVariables": {},
+          "staticMode": true
         }
       }
     }
