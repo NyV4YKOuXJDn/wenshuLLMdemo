@@ -205,7 +205,7 @@ export default function SceneExamples() {
     {
       icon: <Stethoscope />,
       title: "信息一致性检查",
-      description: "xxx",
+      description: "及时发现信息冲突",
       gradient: "from-blue-400 to-blue-500",
       content: `入院评估单：
 患者姓名：张伟
@@ -248,7 +248,7 @@ export default function SceneExamples() {
     {
       icon: <Clipboard />,
       title: "关键评估结果摘要",
-      description: "xxx",
+      description: "汇总患者重要评估指标的变化",
       gradient: "from-purple-400 to-purple-500",
       content: `GCS评估记录单：
 日期：2023年10月2日
@@ -294,7 +294,7 @@ export default function SceneExamples() {
     {
       icon: <Pill />,
       title: "用药记录摘要",
-      description: "xxx",
+      description: "记录用药信息，并标注需要特别关注的用药",
       gradient: "from-green-400 to-green-500",
       content: `医嘱长期医嘱：
 - 药物A：500mg，口服，每8小时一次
@@ -305,6 +305,7 @@ export default function SceneExamples() {
 - 08:00 - 已给予500mg
 - 16:00 - 已给予500mg
 - 24:00 - 未记录
+
 药物B：
 - 10:00 - 已给予10mg`,
       aiOutput: `**用药记录摘要**
@@ -337,7 +338,7 @@ export default function SceneExamples() {
     {
       icon: <BedDouble />,
       title: "冲突医嘱检测",
-      description: "xxx",
+      description: "自动检测医嘱间可能存在的配伍禁忌和相互作用",
       gradient: "from-orange-400 to-orange-500",
       content: `新医嘱：
 药物C：阿莫西林胶囊，500mg，口服，每8小时一次
